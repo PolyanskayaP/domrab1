@@ -22,12 +22,13 @@ class MyApp(App):
 
 
     def btn_pressed(self, *args):    
-        self.on_text()   
-
-    def on_text(self, *args):
         data = self.input_data.text
         #алгоритм с data
+        self.algor(data)
         self.cifr.text = str(data) 
+
+    def algor(self, data):    #data это словами число
+        print(data)
 
 
     def build(self):
