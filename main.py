@@ -25,10 +25,12 @@ class MyApp(App):
         data = self.input_data.text
         #алгоритм с data
         self.algor(data)
-        self.cifr.text = str(data) 
+        
 
     def algor(self, data):    #data это словами число
         print(data)
+
+        self.cifr.text = str(data)  #вывод должно быть измененной data
 
 
     def build(self):
