@@ -9,7 +9,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from kivy.core.window import Window
 
-Window.size = (350, 300)  
+Window.size = (550, 400)  
 Window.clearcolor = (3/255, 186/255, 255/255, 1) 
 #Window.title = "DR1"
 
@@ -25,7 +25,7 @@ class MyApp(App):
         self.cifr = Label(text='')
         self.input_data = TextInput(hint_text='Введите число буквами', multiline=True)
     #    self.input_data.bind(text=self.on_text)
-
+#Label:size: self.texture_size
 
     def btn_pressed(self, *args):    
         data = self.input_data.text
@@ -41,8 +41,9 @@ class MyApp(App):
         onl_ar = {10: 'десять', 11: 'одиннадцать', 12: 'двенадцать', 13: 'тринадцать', 14: 'четырнадцать', 15: 'пятнадцать', 16: 'шестнадцать', 17: 'семнадцать', 18: 'восемнадцать', 19: 'девятнадцать'}
 
         #print(data)
-        if (data[-1:] == ' '):
-            data = data[:-1]
+        #if (data[-1:] == ' '):   yerine
+        #    data = data[:-1]
+        data = " ".join(data.split())
         slova = data.split(' ', 2) 
         skolko = len(slova)
         if (skolko == 2):
@@ -57,32 +58,53 @@ class MyApp(App):
         skolko = len(slova)
 
         osh = []
+        #flag_sot = 1
         if (slova[0]=='') and (slova[1]=='') and (slova[2]==''):
             osh.append('вы ничего не написали :(')
         else:
-            if (slova[0] not in sot_ar.values()):
-                osh.append('первое число должно быть сотней')
+            if (slova[0] not in des_ar.values() and slova[0] not in onl_ar.values() and slova[0] not in ed_ar.values() and slova[0] not in sot_ar.values()):
+                osh.append('первое слово написано неправильно')
+            if (slova[1] not in des_ar.values() and slova[1] not in onl_ar.values() and slova[1] not in ed_ar.values() and slova[1] not in sot_ar.values() and slova[1]!=''):
+                osh.append('второе слово написано неправильно')
+            if (slova[2] not in ed_ar.values() and slova[2] not in des_ar.values() and slova[2] not in onl_ar.values() and slova[2] not in sot_ar.values() and slova[2]!=''):
+                osh.append('третье слово написано неправильно')
+            #if (slova[0] not in sot_ar.values()):
+            #    osh.append('первое слово должно быть сотней')
+            if (slova[0] in ed_ar.values()):
+                osh.append('первое слово не должно быть единицами')
+            elif (slova[0] in des_ar.values()):
+                osh.append('первое слово не должно быть десятками')
+            elif (slova[0] in onl_ar.values()):
+                osh.append('первое слово не должно быть формата 10-19')
+            
             if (slova[1] in sot_ar.values()):
-                osh.append('второе число не должно быть сотней')
+                osh.append('второе слово не должно быть сотней')
+                #flag_sot = 2
+            #elif (slova[1] not in des_ar.values() and slova[1] not in onl_ar.values() and slova[1] not in ed_ar.values()):
+            #    osh.append('второе слово написано неправильно')
+
             if (slova[2] in sot_ar.values()):
-                osh.append('третье число не должно быть сотней')
+                osh.append('третье слово не должно быть сотней')
+                #flag_sot = 3
             if (slova[1] in ed_ar.values()) and (slova[2] in ed_ar.values()):
-                osh.append('нельзя два числа единичного формата')
+                osh.append('нельзя два слова единичного формата')
             if (slova[1] in des_ar.values()) and (slova[2] in des_ar.values()):
-                osh.append('нельзя два числа десятичного формата')
+                osh.append('нельзя два слова десятичного формата')
             if (slova[1] in onl_ar.values()) and (slova[2] in onl_ar.values()):
-                osh.append('нельзя два числа формата 10-19')
+                osh.append('нельзя два слова формата 10-19')
             if (slova[1] in des_ar.values()) and (slova[2] in onl_ar.values()):
                 osh.append('нельзя сначала писать десятки, потом число формата 10-19')
             if (slova[1] in ed_ar.values()) and (slova[2] in des_ar.values()):
-                osh.append('нельзя сначала писать число единичного формата, потом десятки')
+                osh.append('нельзя сначала писать слово единичного формата, потом десятки')
             if (slova[1] in ed_ar.values()) and (slova[2] in onl_ar.values()):
-                osh.append('нельзя сначала писать число единичного формата, потом число формата 10-19')
+                osh.append('нельзя сначала писать слово единичного формата, потом слово формата 10-19')
             if (slova[1] in onl_ar.values()) and not(slova[2] == ''):
-                osh.append('нельзя после числа форматом 10-19 писать еще число')
+                osh.append('нельзя после слова форматом 10-19 писать еще слово')
+            
+            
 
         if osh:
-            self.cifr.text = "; ".join(osh) 
+            self.cifr.text = ";\n".join(osh) 
         else:
             rev_sot = {v:k for k, v in sot_ar.items()}
             rev_des = {v:k for k, v in des_ar.items()}
@@ -117,7 +139,7 @@ class MyApp(App):
         #вывод ошибок предусмотреть
     #    self.cifr.text = str(data)  #вывод должно быть измененной data
         osh = []
-        #ширину экрана исправь и т д 
+        #ширину экрана исправь и т д done
 
 
     def build(self):
