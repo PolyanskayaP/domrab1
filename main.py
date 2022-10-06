@@ -66,19 +66,19 @@ class MyApp(App):
                 osh.append('второе число не должно быть сотней')
             if (slova[2] in sot_ar.values()):
                 osh.append('третье число не должно быть сотней')
-            if (slova[1] in ed_ar) and (slova[2] in ed_ar):
+            if (slova[1] in ed_ar.values()) and (slova[2] in ed_ar.values()):
                 osh.append('нельзя два числа единичного формата')
-            if (slova[1] in des_ar) and (slova[2] in des_ar):
+            if (slova[1] in des_ar.values()) and (slova[2] in des_ar.values()):
                 osh.append('нельзя два числа десятичного формата')
-            if (slova[1] in onl_ar) and (slova[2] in onl_ar):
+            if (slova[1] in onl_ar.values()) and (slova[2] in onl_ar.values()):
                 osh.append('нельзя два числа формата 10-19')
-            if (slova[1] in des_ar) and (slova[2] in onl_ar):
+            if (slova[1] in des_ar.values()) and (slova[2] in onl_ar.values()):
                 osh.append('нельзя сначала писать десятки, потом число формата 10-19')
-            if (slova[1] in ed_ar) and (slova[2] in des_ar):
+            if (slova[1] in ed_ar.values()) and (slova[2] in des_ar.values()):
                 osh.append('нельзя сначала писать число единичного формата, потом десятки')
-            if (slova[1] in ed_ar) and (slova[2] in onl_ar):
+            if (slova[1] in ed_ar.values()) and (slova[2] in onl_ar.values()):
                 osh.append('нельзя сначала писать число единичного формата, потом число формата 10-19')
-            if (slova[1] in onl_ar) and not(slova[2] == ''):
+            if (slova[1] in onl_ar.values()) and not(slova[2] == ''):
                 osh.append('нельзя после числа форматом 10-19 писать еще число')
 
         if osh:
@@ -90,18 +90,18 @@ class MyApp(App):
             rev_onl = {v:k for k, v in onl_ar.items()}
             s = str(rev_sot[slova[0]])
 
-            if (slova[1] in onl_ar):
-                q = rev_onl[slova[1]]
+            if (slova[1] in onl_ar.values()):
+                q = str(rev_onl[slova[1]])
                 self.cifr.text = s + q 
-            elif (slova[1] in ed_ar):
-                q = '0' + rev_ed[slova[1]]
+            elif (slova[1] in ed_ar.values()):
+                q = '0' + str(rev_ed[slova[1]])
                 self.cifr.text = s + q 
-            elif (slova[1] in des_ar) and (slova[2] in ed_ar):
-                d = rev_des[slova[1]]
-                e = rev_ed[slova[2]]
+            elif (slova[1] in des_ar.values()) and (slova[2] in ed_ar.values()):
+                d = str(rev_des[slova[1]])
+                e = str(rev_ed[slova[2]])
                 self.cifr.text = s + d + e 
-            elif (slova[1] in des_ar) and (slova[2] == ''):
-                d = rev_des[slova[1]]
+            elif (slova[1] in des_ar.values()) and (slova[2] == ''):
+                d = str(rev_des[slova[1]])
                 e = '0'
                 self.cifr.text = s + d + e 
             elif (slova[1] == '') and (slova[2] == ''):
