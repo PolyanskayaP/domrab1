@@ -82,13 +82,15 @@ class MyApp(App):
                         if (slova[2] == ''):
                             self.cifr.text = cif
                         else:
-                            self.cifr.text =  'лишнее слово - '+ slova[2] +'. \n'+'Нельзя после слова формата 10-19 ('+slova[1]+') \nписать другое слово ('+slova[2]+')'
+                            ks = slova[2].split(' ', 1) 
+                            self.cifr.text =  'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова формата 10-19 ('+slova[1]+') \nписать никакое другое слово '
                     elif (slova[1] in ed_ar.values()):
                         cif = cif + '0' + str(rev_ed[slova[1]]) 
                         if (slova[2] == ''):
                             self.cifr.text = cif
                         else:
-                            self.cifr.text =  'лишнее слово - '+ slova[2] +'. \n'+'Нельзя после слова единичного формата ('+slova[1]+') \nписать другое слово ('+slova[2]+')'
+                            ks = slova[2].split(' ', 1) 
+                            self.cifr.text =  'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова единичного формата ('+slova[1]+') \nписать другое слово '
                     else:
                         self.cifr.text =  'неправильное слово - '+ slova[1] + '\nнельзя после сотен ('+slova[0]+') писать что-либо ('+slova[1]+'), кроме десятков, единиц\nи слов формата 10-19'                  
             else:
@@ -102,7 +104,8 @@ class MyApp(App):
                         if (slova[2]==''):
                             self.cifr.text = cif
                         else:
-                            self.cifr.text = 'лишнее слово - '+ slova[2] +'. \n'+'Нельзя после слова единичного формата ('+slova[1]+') \nписать другое слово ('+slova[2]+')'
+                            ks = slova[2].split(' ', 1) 
+                            self.cifr.text = 'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова единичного формата ('+slova[1]+') \nписать другое слово ('+slova[2]+')'
                     else:
                         self.cifr.text = 'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова десятичного формата ('+slova[0]+') \nписать ничего другого, кроме единиц'
                 elif (slova[0] in onl_ar.values()):
@@ -110,13 +113,13 @@ class MyApp(App):
                     if (slova[1] == ''):
                         self.cifr.text = cif
                     else:
-                        self.cifr.text =  'лишнее слово - '+ slova[1] +'. \n'+'Нельзя после слова формата 10-19 ('+slova[0]+') \nписать другое слово ('+slova[1]+')'
+                        self.cifr.text =  'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова формата 10-19 ('+slova[0]+') \nписать другое слово ('+slova[1]+')'
                 elif (slova[0] in ed_ar.values()):
                     cif = cif + str(rev_ed[slova[0]]) 
                     if (slova[1] == ''):
                         self.cifr.text = cif
                     else:
-                        self.cifr.text =  'лишнее слово - '+ slova[1] +'. \n'+'Нельзя после слова единичного формата ('+slova[0]+') \nписать другое слово ('+slova[1]+')'
+                        self.cifr.text =  'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова единичного формата ('+slova[0]+') \nписать никакое другое слово '
                 else:
                     self.cifr.text =  'неправильное слово - '+ slova[0] 
 
