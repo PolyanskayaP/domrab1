@@ -32,6 +32,18 @@ class MyApp(App):
 
         onl_ar = {10: 'десять', 11: 'одиннадцать', 12: 'двенадцать', 13: 'тринадцать', 14: 'четырнадцать', 15: 'пятнадцать', 16: 'шестнадцать', 17: 'семнадцать', 18: 'восемнадцать', 19: 'девятнадцать'}
 
+        def var_mi(s):
+            if s in ed_ar.values():
+                return 'единичного формата'
+            elif s in des_ar.values():
+                return 'десятичного формата'
+            elif s in onl_ar.values():
+                return 'формата 10-19'
+            elif s in sot_ar.values():
+                return 'формата сотен'
+            else:
+                return ''
+
         data = " ".join(data.split())
         slova = data.split(' ', 2) 
         skolko = len(slova)
@@ -72,27 +84,52 @@ class MyApp(App):
                         else:
                             ks = slova[2].split(' ', 1)  
                             if ks[0] not in ed_ar.values():
-                                self.cifr.text = 'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова десятичного формата ('+slova[1]+') \nписать ничего другого, кроме единиц'
+                                varmi = var_mi(ks[0])
+                                if varmi == '':
+                                    self.cifr.text = 'неправильное слово - '+ ks[0] 
+                                else:
+                                    self.cifr.text = 'Нельзя после слова десятичного формата \nписать слово ' + varmi  
+                                #self.cifr.text = 'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова десятичного формата \nписать ничего другого, кроме единиц'
                             else:
                                 #cif = cif + str(rev_ed[ks[0]])                      
                                 #self.cifr.text = cif
-                                self.cifr.text = 'неправильное слово - '+ ks[1] +'. \n'+'Нельзя после слова единичного формата ('+ks[0]+') \nписать ничего другого, кроме единиц'
+                                varmi = var_mi(ks[1])
+                                if varmi == '':
+                                    self.cifr.text = 'неправильное слово - '+ ks[1] 
+                                else:
+                                    self.cifr.text = 'Нельзя после слова единичного формата \nписать слово ' + varmi  
+                                #self.cifr.text = 'неправильное слово - '+ ks[1] +'. \n'+'Нельзя после слова единичного формата \nписать ничего другого, кроме единиц'
                     elif (slova[1] in onl_ar.values()):
                         cif = cif + str(rev_onl[slova[1]]) 
                         if (slova[2] == ''):
                             self.cifr.text = cif
                         else:
                             ks = slova[2].split(' ', 1) 
-                            self.cifr.text =  'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова формата 10-19 ('+slova[1]+') \nписать никакое другое слово '
+                            varmi = var_mi(ks[0]) 
+                            if varmi == '':
+                                    self.cifr.text = 'неправильное слово - '+ ks[0] 
+                            else:
+                                self.cifr.text = 'Нельзя после слова формата 10-19 \nписать слово ' + varmi  
+                            #self.cifr.text =  'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова формата 10-19 \nписать никакое другое слово '
                     elif (slova[1] in ed_ar.values()):
                         cif = cif + '0' + str(rev_ed[slova[1]]) 
                         if (slova[2] == ''):
                             self.cifr.text = cif
                         else:
                             ks = slova[2].split(' ', 1) 
-                            self.cifr.text =  'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова единичного формата ('+slova[1]+') \nписать другое слово '
+                            varmi = var_mi(ks[0]) 
+                            if varmi == '':
+                                    self.cifr.text = 'неправильное слово - '+ ks[0] 
+                            else:
+                                self.cifr.text = 'Нельзя после слова единичного формата \nписать слово ' + varmi  
+                            #self.cifr.text =  'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова единичного формата \nписать никакое другое слово '
                     else:
-                        self.cifr.text =  'неправильное слово - '+ slova[1] + '\nнельзя после сотен ('+slova[0]+') писать что-либо ('+slova[1]+'), кроме десятков, единиц\nи слов формата 10-19'                  
+                        varmi = var_mi(slova[1])  
+                        if varmi == '':
+                                self.cifr.text = 'неправильное слово - '+ slova[1] 
+                        else:
+                            self.cifr.text = 'Нельзя после слова формата сотен \nписать слово ' + varmi  
+                        #self.cifr.text =  'неправильное слово - '+ slova[1] + '\nНельзя после сотен писать что-либо, кроме\n десятков, единиц и слов формата 10-19'                  
             else:
                 if (slova[0] in des_ar.values()):
                     cif = cif + str(rev_des[slova[0]]) 
@@ -105,21 +142,41 @@ class MyApp(App):
                             self.cifr.text = cif
                         else:
                             ks = slova[2].split(' ', 1) 
-                            self.cifr.text = 'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова единичного формата ('+slova[1]+') \nписать другое слово ('+slova[2]+')'
+                            varmi = var_mi(ks[0]) 
+                            if varmi == '':
+                                    self.cifr.text = 'неправильное слово - '+ ks[0] 
+                            else:
+                                self.cifr.text = 'Нельзя после слова единичного формата \nписать слово ' + varmi 
+                            #self.cifr.text = 'неправильное слово - '+ ks[0] +'. \n'+'Нельзя после слова единичного формата \nписать никакое другое слово '
                     else:
-                        self.cifr.text = 'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова десятичного формата ('+slova[0]+') \nписать ничего другого, кроме единиц'
+                        varmi = var_mi(slova[1]) 
+                        if varmi == '':
+                                self.cifr.text = 'неправильное слово - '+ slova[1] 
+                        else:
+                            self.cifr.text = 'Нельзя после слова десятичного формата \nписать слово ' + varmi 
+                        #self.cifr.text = 'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова десятичного формата \nписать ничего другого, кроме единиц'
                 elif (slova[0] in onl_ar.values()):
                     cif = cif + str(rev_onl[slova[0]]) 
                     if (slova[1] == ''):
                         self.cifr.text = cif
                     else:
-                        self.cifr.text =  'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова формата 10-19 ('+slova[0]+') \nписать другое слово ('+slova[1]+')'
+                        varmi = var_mi(slova[1]) 
+                        if varmi == '':
+                            self.cifr.text = 'неправильное слово - '+ slova[1] 
+                        else:
+                            self.cifr.text = 'Нельзя после слова формата 10-19 \nписать слово ' + varmi 
+                        #self.cifr.text =  'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова формата 10-19 \nписать никакое другое слово '
                 elif (slova[0] in ed_ar.values()):
                     cif = cif + str(rev_ed[slova[0]]) 
                     if (slova[1] == ''):
                         self.cifr.text = cif
-                    else:
-                        self.cifr.text =  'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова единичного формата ('+slova[0]+') \nписать никакое другое слово '
+                    else:                    
+                        varmi = var_mi(slova[1]) 
+                        if varmi == '':
+                            self.cifr.text = 'неправильное слово - '+ slova[1] 
+                        else:
+                            self.cifr.text = 'Нельзя после слова единичного формата \nписать слово ' + varmi 
+                        #self.cifr.text =  'неправильное слово - '+ slova[1] +'. \n'+'Нельзя после слова единичного формата \nписать никакое другое слово '
                 else:
                     self.cifr.text =  'неправильное слово - '+ slova[0] 
 
